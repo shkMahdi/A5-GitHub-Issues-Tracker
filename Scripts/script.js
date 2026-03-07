@@ -21,6 +21,8 @@ const loadData = () => {
 // },
 
 const displayIssues = (issues) => {
+    updateIssueCount(issues);
+
     const cardContainer = document.getElementById("card-container");
     cardContainer.innerHTML = "";
 
@@ -50,6 +52,12 @@ const displayIssues = (issues) => {
         `
         cardContainer.appendChild(div);
     }
+}
+
+// Issue counter
+const updateIssueCount = (issues) => {
+    const noOfIssues = document.getElementById("number-of-issues");
+    noOfIssues.innerText = issues.length;
 }
 
 loadData();
