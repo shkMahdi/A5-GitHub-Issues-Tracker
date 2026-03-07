@@ -45,8 +45,8 @@ const displayIssues = (issues) => {
                     <button class="btn btn-sm h-6 rounded-2xl btn-outline btn-warning bg-amber-100">Bug</button>
                 </div>
                 <div class="py-4 border-t-2 border-t-gray-400/10">
-                    <p class="text-[12px] text-gray-400">Auther Name</p>
-                    <p class="text-[12px] text-gray-400">Date</p>
+                    <p class="text-[12px] text-gray-400">by ${issue.author}</p>
+                    <p class="text-[12px] text-gray-400">${new Date(issue.createdAt).toLocaleDateString("en-US")}</p>
                 </div>
             </div>
         `
