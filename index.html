@@ -11,7 +11,9 @@
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
 
     <!-- font awesome -->
-     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css" integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
+        integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
 
     <!-- font-geist -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,13 +26,53 @@
             font-family: "Geist", sans-serif;
         }
     </style>
+
+    <script>
+        function login() {
+
+            const username = document.getElementById("user-name").value;
+            const password = document.getElementById("password").value;
+
+            if (username === "admin" && password === "admin123") {
+                window.location.href = "main.html";
+            }
+            else {
+                alert("Invalid username or password");
+            }
+
+        }
+    </script>
 </head>
 
 <body class="font-geist">
-    <h1 class="text-5xl font-bold text-blue-600">Let's get Started</h1>
-    <button class="btn btn-primary">Shall we??</button>
+    <!-- login form -->
+    <section>
+        <div class="flex justify-center mt-[5%]">
+            <fieldset class="fieldset bg-white border-base-300 rounded-box w-[90%] md:w-[32%] border p-8 shadow-2xl">
+                <div class="flex flex-col justify-center items-center mb-6">
+                    <img class="mb-6 max-w-[100px]" src="./assets/github-logo.png" alt="">
+                    <h3 class="text-2xl font-semibold">GitHub Issues Tracker</h3>
+                    <p class="text-[16px] text-gray-500">Sign in to manage your issues</p>
+                </div>
+                <label class="label">User Name</label>
+                <input id="user-name" type="text" class="input w-full" placeholder="Enter Your User Name" />
 
-    <script src="./Scripts/script.js"></script>
+                <label class="label">Password</label>
+                <input id="password" type="password" class="input w-full" placeholder="Password" />
+
+                <button onclick="login()" class="btn btn-primary mt-4 mb-4">Login</button>
+
+                <div class="flex flex-col justify-center items-center">
+                    <p class="text-[16px] text-gray-800 mb-4">OR</p>
+                    <p class="text-[14px] text-gray-500 mb-7">Demo Credentials:</p>
+                    <p class="text-[16px] text-gray-500"><span class="text-black font-semibold ">User Name: </span>admin
+                    </p>
+                    <p class="text-[16px] text-gray-500"><span class="text-black font-semibold">Password:
+                        </span>admin123</p>
+                </div>
+            </fieldset>
+        </div>
+    </section>
 </body>
 
 </html>
