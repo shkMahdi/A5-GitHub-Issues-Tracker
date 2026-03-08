@@ -14,7 +14,7 @@ const btnClosed = document.getElementById("btn-closed");
 
 
 const segragateIssues = (issues) => {
-    for(let issue of issues){
+    for (let issue of issues) {
         allIssues.push(issue);
         (issue.status === 'open' ? openIssues.push(issue) : closedIssues.push(issue));
     }
@@ -31,14 +31,102 @@ const loadIssueDetail = async (id) => {
     const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
     const res = await fetch(url);
     const details = await res.json();
-    displayModalInfo(details);
+    displayModalInfo(details.data);
 }
 
-const displayModalInfo = (issues) => {
+const displayModalInfo = (issue) => {
+
     const infoContainer = document.getElementById("info-container");
+
+    const statusBadge =
+        issue.status === "open"
+            ? `<span class="badge badge-success text-white">Opened</span>`
+            : `<span class="badge badge-secondary text-white">Closed</span>`;
+
+    const priorityBadge =
+        issue.priority === "high"
+            ? "badge-error"
+            : issue.priority === "medium"
+                ? "badge-warning"
+                : "badge-soft";
+
+    const labelsHTML = issue.labels.map(label => {
+
+        if (label === "bug") {
+            return `<span class="badge badge-outline badge-error gap-1 badge-sm bg-red-100">
+                        <i class="fa-solid fa-bug"></i> BUG
+                    </span>`;
+        }
+
+        else if (label === "help wanted") {
+            return `<span class="badge badge-outline badge-warning gap-1  badge-sm bg-amber-100">
+                        <i class="fa-solid fa-life-ring"></i> HELP WANTED
+                    </span>`;
+        }
+
+        else if (label === "enhancement") {
+            return `<span class="badge badge-outline badge-success gap-1  badge-sm bg-green-100">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> ENHANCEMENT
+                    </span>`;
+        }
+        else if (label === "documentation"){
+            return `<span class="badge badge-outline badge-info  badge-sm bg-blue-100">
+                        DOCUMENTATION
+                    </span>`
+        }
+        else {
+            return `<span class="badge badge-outline badge-secondary  badge-sm bg-pink-100">
+                        GOOD FIRST ISSUE
+                    </span>`
+        }
+
+    }).join("");
+
     infoContainer.innerHTML = `
-        
-    `
+    
+        <h2 class="text-2xl font-bold mb-2">${issue.title}</h2>
+
+        <div class="flex items-center gap-2 text-sm text-gray-500 mb-4">
+            ${statusBadge}
+            <span>Opened by ${issue.author}</span>
+            <span>•</span>
+            <span>${new Date(issue.createdAt).toLocaleDateString("en-US")}</span>
+        </div>
+
+        <div class="flex gap-2 mb-4">
+            ${labelsHTML}
+        </div>
+
+        <p class="text-gray-600 mb-6">
+            ${issue.description}
+        </p>
+
+        <div class="bg-gray-100 rounded-lg p-4 flex justify-between items-center">
+
+            <div>
+                <p class="text-sm text-gray-500">Assignee:</p>
+                <p class="font-semibold">
+                    ${issue.assignee ? issue.assignee : issue.author}
+                </p>
+            </div>
+
+            <div>
+                <p class="text-sm text-gray-500">Priority:</p>
+                <span class="badge ${priorityBadge} text-gray-400 uppercase">
+                    ${issue.priority}
+                </span>
+            </div>
+
+        </div>
+
+        <div class="modal-action">
+            <form method="dialog">
+                <button class="btn btn-sm btn-primary">Close</button>
+            </form>
+        </div>
+
+    `;
+
     document.getElementById("my_modal_5").showModal();
 };
 
@@ -84,7 +172,7 @@ const displayIssues = () => {
                     icon: `<i class="fa-solid fa-wand-magic-sparkles" style="color: #00a96e;"></i>`
                 };
             }
-            else if (label === "documentation"){
+            else if (label === "documentation") {
                 return {
                     class: "btn-outline btn-info bg-blue-100",
                     icon: ""
@@ -92,7 +180,7 @@ const displayIssues = () => {
             }
             else {
                 return {
-                    class: "btn-outline btn-secondary bg-red-100",
+                    class: "btn-outline btn-secondary bg-pink-100",
                     icon: ""
                 };
             }
@@ -149,7 +237,7 @@ const displayOpenIssues = () => {
     cardContainer.innerHTML = "";
 
     for (let issue of openIssues) {
-        
+
         const div = document.createElement('div');
 
         const priorityClass = issue.priority === "high" ? "btn-error" : (issue.priority === "medium" ? "btn-warning" : "btn-soft text-gray-400");
@@ -175,7 +263,7 @@ const displayOpenIssues = () => {
                     icon: `<i class="fa-solid fa-wand-magic-sparkles" style="color: #00a96e;"></i>`
                 };
             }
-            else if (label === "documentation"){
+            else if (label === "documentation") {
                 return {
                     class: "btn-outline btn-info bg-blue-100",
                     icon: ""
@@ -240,7 +328,7 @@ const displayClosedIssues = () => {
     cardContainer.innerHTML = "";
 
     for (let issue of closedIssues) {
-        
+
         const div = document.createElement('div');
 
         const priorityClass = issue.priority === "high" ? "btn-error" : (issue.priority === "medium" ? "btn-warning" : "btn-soft text-gray-400");
@@ -266,7 +354,7 @@ const displayClosedIssues = () => {
                     icon: `<i class="fa-solid fa-wand-magic-sparkles" style="color: #00a96e;"></i>`
                 };
             }
-            else if (label === "documentation"){
+            else if (label === "documentation") {
                 return {
                     class: "btn-outline btn-info bg-blue-100",
                     icon: ""
