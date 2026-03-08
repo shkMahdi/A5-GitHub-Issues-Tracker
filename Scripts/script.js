@@ -48,7 +48,7 @@ const displayModalInfo = (issue) => {
             ? "badge-error"
             : issue.priority === "medium"
                 ? "badge-warning"
-                : "badge-soft";
+                : "badge-neutral";
 
     const labelsHTML = issue.labels.map(label => {
 
@@ -112,7 +112,7 @@ const displayModalInfo = (issue) => {
 
             <div>
                 <p class="text-sm text-gray-500">Priority:</p>
-                <span class="badge ${priorityBadge} text-gray-400 uppercase">
+                <span class="badge ${priorityBadge} text-white uppercase">
                     ${issue.priority}
                 </span>
             </div>
