@@ -27,6 +27,20 @@ const updateIssueCount = (issues) => {
     noOfIssues.innerText = issues.length;
 }
 
+const loadIssueDetail = async (id) => {
+    const url = `https://phi-lab-server.vercel.app/api/v1/lab/issue/${id}`;
+    const res = await fetch(url);
+    const details = await res.json();
+    displayModalInfo(details);
+}
+
+const displayModalInfo = (issues) => {
+    const infoContainer = document.getElementById("info-container");
+    infoContainer.innerHTML = `
+        
+    `
+    document.getElementById("my_modal_5").showModal();
+};
 
 const displayIssues = () => {
     updateIssueCount(allIssues);
@@ -99,7 +113,7 @@ const displayIssues = () => {
         //  for enhancement <i class="fa-solid fa-wand-magic-sparkles" style="color: #00a96e;"></i>  
 
         div.innerHTML = `
-            <div class="p-4 rounded-md border-t-4 space-y-2 shadow-xl ${borderTop}">
+            <div onclick="loadIssueDetail(${issue.id})" class="p-4 rounded-md border-t-4 space-y-2 shadow-xl ${borderTop}">
                 <div class="flex justify-between">
                     <img src="${issue.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}" alt="">
                     <button class="btn btn-sm w-20 h-6 rounded-2xl btn-soft ${priorityClass}">${issue.priority.toUpperCase()}</button>
@@ -190,7 +204,7 @@ const displayOpenIssues = () => {
         //  for enhancement <i class="fa-solid fa-wand-magic-sparkles" style="color: #00a96e;"></i>  
 
         div.innerHTML = `
-            <div class="p-4 rounded-md border-t-4 space-y-2 shadow-xl ${borderTop}">
+            <div onclick="loadIssueDetail(${issue.id})" class="p-4 rounded-md border-t-4 space-y-2 shadow-xl ${borderTop}">
                 <div class="flex justify-between">
                     <img src="${issue.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}" alt="">
                     <button class="btn btn-sm w-20 h-6 rounded-2xl btn-soft ${priorityClass}">${issue.priority.toUpperCase()}</button>
@@ -281,7 +295,7 @@ const displayClosedIssues = () => {
         //  for enhancement <i class="fa-solid fa-wand-magic-sparkles" style="color: #00a96e;"></i>  
 
         div.innerHTML = `
-            <div class="p-4 rounded-md border-t-4 space-y-2 shadow-xl ${borderTop}">
+            <div onclick="loadIssueDetail(${issue.id})" class="p-4 rounded-md border-t-4 space-y-2 shadow-xl ${borderTop}">
                 <div class="flex justify-between">
                     <img src="${issue.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}" alt="">
                     <button class="btn btn-sm w-20 h-6 rounded-2xl btn-soft ${priorityClass}">${issue.priority.toUpperCase()}</button>
