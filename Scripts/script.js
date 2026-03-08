@@ -7,6 +7,7 @@ const loadData = () => {
 const allIssues = [];
 const openIssues = [];
 const closedIssues = [];
+let filterCards = [];
 
 const btnAll = document.getElementById("btn-all");
 const btnOpen = document.getElementById("btn-open");
@@ -69,7 +70,7 @@ const displayModalInfo = (issue) => {
                         <i class="fa-solid fa-wand-magic-sparkles"></i> ENHANCEMENT
                     </span>`;
         }
-        else if (label === "documentation"){
+        else if (label === "documentation") {
             return `<span class="badge badge-outline badge-info  badge-sm bg-blue-100">
                         DOCUMENTATION
                     </span>`
@@ -402,5 +403,109 @@ const displayClosedIssues = () => {
         cardContainer.appendChild(div);
     }
 }
+
+const searchRes = () => {
+    updateIssueCount(filterCards);
+
+    btnOpen.classList.remove("btn-primary");
+    btnClosed.classList.remove("btn-primary");
+    btnAll.classList.remove("btn-primary");
+
+    btnOpen.classList.add("btn-outline");
+    btnClosed.classList.add("btn-outline");
+    btnAll.classList.add("btn-outline");
+
+
+    const cardContainer = document.getElementById("card-container");
+    cardContainer.innerHTML = "";
+
+    for (let issue of filterCards) {
+
+        const div = document.createElement('div');
+
+        const priorityClass = issue.priority === "high" ? "btn-error" : (issue.priority === "medium" ? "btn-warning" : "btn-soft text-gray-400");
+
+        const borderTop = issue.status === "open" ? "border-t-green-600" : "border-t-purple-600";
+
+        const getLabelInfo = (label) => {
+            if (label === "bug") {
+                return {
+                    class: "btn-outline btn-error bg-red-100",
+                    icon: `<i class="fa-solid fa-bug" style="color: rgb(234, 20, 20);"></i>`
+                };
+            }
+            else if (label === "help wanted") {
+                return {
+                    class: "btn-outline btn-warning bg-amber-100",
+                    icon: `<i class="fa-solid fa-life-ring" style="color: #d97706;"></i>`
+                };
+            }
+            else if (label === "enhancement") {
+                return {
+                    class: "btn-outline btn-success bg-green-100",
+                    icon: `<i class="fa-solid fa-wand-magic-sparkles" style="color: #00a96e;"></i>`
+                };
+            }
+            else if (label === "documentation") {
+                return {
+                    class: "btn-outline btn-info bg-blue-100",
+                    icon: ""
+                };
+            }
+            else {
+                return {
+                    class: "btn-outline btn-secondary bg-pink-100",
+                    icon: ""
+                };
+            }
+        };
+
+        const labelsHTML = issue.labels.map(label => {
+            const labelInfo = getLabelInfo(label);
+            return `
+                <button class="btn btn-sm h-6 rounded-2xl flex items-center gap-1 ${labelInfo.class}">
+                    ${labelInfo.icon}
+                    ${label.toUpperCase()}
+                </button>
+            `;
+        }).join("");
+
+        //  for bug <i class="fa-solid fa-bug" style="color: rgb(234, 20, 20);"></i>
+        //  for help <i class="fa-solid fa-life-ring" style="color: #d97706;"></i>
+        //  for enhancement <i class="fa-solid fa-wand-magic-sparkles" style="color: #00a96e;"></i>  
+
+        div.innerHTML = `
+            <div onclick="loadIssueDetail(${issue.id})" class="p-4 rounded-md border-t-4 space-y-2 shadow-xl ${borderTop}">
+                <div class="flex justify-between">
+                    <img src="${issue.status === "open" ? "./assets/Open-Status.png" : "./assets/Closed- Status .png"}" alt="">
+                    <button class="btn btn-sm w-20 h-6 rounded-2xl btn-soft ${priorityClass}">${issue.priority.toUpperCase()}</button>
+                </div>
+                <p class="text-[14px] font-semibold">${issue.title}</p>
+                <p class="text-[12px] text-gray-400">${issue.description}</p>
+                <div class="mb-3 flex gap-1">
+                    ${labelsHTML}
+                </div>
+                <div class="py-4 border-t-2 border-t-gray-400/10">
+                    <p class="text-[12px] text-gray-400">by ${issue.author}</p>
+                    <p class="text-[12px] text-gray-400">${new Date(issue.createdAt).toLocaleDateString("en-US")}</p>
+                </div>
+            </div>
+        `
+        cardContainer.appendChild(div);
+    }
+}
+
+document.getElementById("search-input").addEventListener("input", () => {
+    const input = document.getElementById("search-input").value.toLowerCase();
+
+    if (input === "" || input === null) {
+        displayIssues();
+    } else {
+        filterCards = allIssues.filter((issue) => {
+            return issue.title.toLowerCase().includes(input);
+        });
+        searchRes();
+    }
+});
 
 loadData();
