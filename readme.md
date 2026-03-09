@@ -1,57 +1,87 @@
-1️⃣ What is the difference between var, let, and const?
-Ans: 
-var is an old way to declare variables. It can be redeclared and updated. It ignores blocks like if or for.
-Let can be updated but not redeclared. It respects block scope {}.
-Const cannot be updated or redeclared. It is used by default unless if it is known that the value will change.
+# JavaScript Fundamentals
 
+## 1️⃣ What is the difference between var, let, and const?
 
-2️⃣ What is the spread operator (...)?
-Ans:
-spread operator spreads the items of an array or object into individual pieces.
-e.g. 
+**Ans:**
+
+- `var` is an old way to declare variables. It can be redeclared and updated. It ignores blocks like `if` or `for`.
+- `let` can be updated but not redeclared. It respects block scope `{}`.
+- `const` cannot be updated or redeclared. It is used by default unless it is known that the value will change.
+
+---
+
+## 2️⃣ What is the spread operator (...)?
+
+**Ans:**
+
+The spread operator spreads the items of an array or object into individual pieces.
+```js
 const arr = [1,2,3];
-console.log(...arr) 
+console.log(...arr)
+```
 
-output:
+**Output:**
+```
 1 2 3
+```
 
+---
 
-3️⃣ What is the difference between map(), filter(), and forEach()?
-Ans:
-forEach() just loops and does something. Returns nothing.
-map() loops and returns a new array with transformed values.
-filter() loops and returns a new array with only items that pass a condition.
+## 3️⃣ What is the difference between map(), filter(), and forEach()?
 
-4️⃣ What is an arrow function?
-Ans:
- arrow functions are a shorter and cleaner way to write functions.
-e.g.
-Regular function:
+**Ans:**
+
+- `forEach()` just loops and does something. Returns nothing.
+- `map()` loops and returns a new array with transformed values.
+- `filter()` loops and returns a new array with only items that pass a condition.
+
+---
+
+## 4️⃣ What is an arrow function?
+
+**Ans:**
+
+Arrow functions are a shorter and cleaner way to write functions.
+
+**Regular function:**
+```js
 function add(a, b){
   return a + b;
 }
+```
 
-Arrow function:
+**Arrow function:**
+```js
 const add = (a, b) => a + b;
+```
 
+---
 
-5️⃣ What are template literals?
-Ans: 
-Template literals are a cleaner way to write strings using beckticks instead of quotes. Here variables can be directly embedded. It is also used for writing multi line strings.
+## 5️⃣ What are template literals?
 
-e.g.1
+**Ans:**
+
+Template literals are a cleaner way to write strings using backticks instead of quotes. Here variables can be directly embedded. It is also used for writing multi line strings.
+
+**Example 1:**
+```js
 const twoLineString = `Hello,
                        world`
-output:
+```
+
+**Output:**
+```
 Hello,
 world
+```
 
-e.g.2
+**Example 2:**
+```js
 const name = "Mahdi";
 
-old way:  
+// Old way
 console.log("name is " + name + "!");
 
-template literal:
+// Template literal
 console.log(`name is ${name}!`);
-
+```
