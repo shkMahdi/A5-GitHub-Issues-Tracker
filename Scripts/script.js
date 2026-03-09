@@ -18,14 +18,17 @@ const spinner = (status) => {
     if(status) {
         document.getElementById("spinner").classList.remove("hidden");
         document.getElementById("issue-container").classList.add("hidden");
+        document.getElementById("issue-indicator").classList.add("hidden");
     }
     else {
         document.getElementById("spinner").classList.add("hidden");
         document.getElementById("issue-container").classList.remove("hidden");
+        document.getElementById("issue-indicator").classList.remove("hidden");
     }
 }
 
 const segragateIssues = (issues) => {
+    spinner();
     for (let issue of issues) {
         allIssues.push(issue);
         (issue.status === 'open' ? openIssues.push(issue) : closedIssues.push(issue));
